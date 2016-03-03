@@ -120,6 +120,24 @@
       } else {
         el.attachEvent('on' + event, eventListener);
       }
+    },
+
+    addClass: function ( classname, element ) {
+      var cn = element.className;
+      if( cn.indexOf( classname ) != -1 ) {
+        return;
+      }
+      if( cn != '' ) {
+        classname = ' '+classname;
+      }
+      element.className = cn+classname;
+    },
+
+    removeClass: function ( classname, element ) {
+      var cn = element.className;
+      var rxp = new RegExp('\\s?\\b' + classname + '\\b', 'g');
+      cn = cn.replace( rxp, '' );
+      element.className = cn;
     }
   };
 
@@ -241,7 +259,7 @@
       expiryDays: 365,
       markup: [
         '<div class="cc_banner-wrapper {{containerClasses}}">',
-        '<div class="cc_banner cc_container cc_container--open">',
+        '<div class="cc_banner cc_container cc_container--is-open js_cc_container">',
         '<a href="#null" data-cc-event="click:dismiss" target="_blank" class="cc_btn cc_btn_accept_all">{{options.dismiss}}</a>',
 
         '<p class="cc_message">{{options.message}} <a data-cc-if="options.link" target="{{ options.target }}" class="cc_more_info" href="{{options.link || "#null"}}">{{options.learnMore}}</a></p>',
@@ -332,11 +350,28 @@
     },
 
     dismiss: function (evt) {
+      var self = this;
       evt.preventDefault && evt.preventDefault();
       evt.returnValue = false;
       this.options.onDismiss();
       this.setDismissedCookie();
-      this.container.removeChild(this.element);
+      this.removeBanner();
+    },
+
+    showBanner: function () {
+      Util.addClass('cc_container--is-open', this.element.querySelector('.js_cc_container'));
+    },
+
+    hideBanner: function () {
+      Util.removeClass('cc_container--is-open', this.element.querySelector('.js_cc_container'));
+    },
+
+    removeBanner: function () {
+      var self = this;
+      this.hideBanner();
+      setTimeout(function() {
+        self.container.removeChild(self.element);
+      }, 1000);
     },
 
     setDismissedCookie: function () {
