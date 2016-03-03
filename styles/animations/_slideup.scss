@@ -1,18 +1,5 @@
-$plugin-height: 66px;
+$plugin-height: 70px;
 $transition-delay: .8s;
-
-/* Fade in up
------------------------------------- */
-@keyframes slideUp {
-    0% {
-        transform: translateY($plugin-height);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
 
 .cc_container {
     transition: transform $transition-delay;
@@ -20,7 +7,6 @@ $transition-delay: .8s;
 
     &.cc_container--is-open {
         transform: translateY(0);
-        animation: slideUp $transition-delay;
     }
 }
 
