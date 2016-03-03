@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Cookie Consent</title>
-
+    <style>body { height: 200%;}</style>
 </head>
 <body>
     <h1>Cookie Consent example page.</h1>
@@ -18,8 +18,11 @@
 <script>
     window.cookieconsent_options = {
         learnMore: 'more info',
-        theme: 'build/dark-top.css'
+        theme: './build/dark-bottom.css',
+        onDismiss: function () {
+            console.log('Fire on dismiss');
+        }
     }
 </script>
-<script type="text/javascript" src="cookieconsent.js"></script>
+<script type="text/javascript" src="./cookieconsent.js"></script>
 </html>
