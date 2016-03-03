@@ -237,7 +237,7 @@
       container: null, // selector
       theme: 'light-floating',
       domain: null, // default to current domain.
-      path: '/', 
+      path: '/',
       expiryDays: 365,
       markup: [
         '<div class="cc_banner-wrapper {{containerClasses}}">',
@@ -249,7 +249,10 @@
         '<a class="cc_logo" target="_blank" href="http://silktide.com/cookieconsent">Cookie Consent plugin for the EU cookie law</a>',
         '</div>',
         '</div>'
-      ]
+      ],
+      onDismiss: function(cb) {
+        return cb.call();
+      }
     },
 
     init: function () {
@@ -331,6 +334,7 @@
     dismiss: function (evt) {
       evt.preventDefault && evt.preventDefault();
       evt.returnValue = false;
+      this.options.onDismiss();
       this.setDismissedCookie();
       this.container.removeChild(this.element);
     },
