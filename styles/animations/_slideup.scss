@@ -1,4 +1,5 @@
 $plugin-height: 66px;
+$transition-delay: .8s;
 
 /* Fade in up
 ------------------------------------ */
@@ -13,10 +14,13 @@ $plugin-height: 66px;
 }
 
 
+.cc_container {
+    transition: transform $transition-delay;
+    transform: translateY($plugin-height);
 
-.cc_container,
-.cc_message,
-.cc_btn {
-    animation-duration: 0.8s;
-    animation-name: slideUp;
+    &.cc_container--is-open {
+        transform: translateY(0);
+        animation: slideUp $transition-delay;
+    }
 }
+
