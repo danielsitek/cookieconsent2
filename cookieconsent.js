@@ -138,6 +138,17 @@
       var rxp = new RegExp('\\s?\\b' + classname + '\\b', 'g');
       cn = cn.replace( rxp, '' );
       element.className = cn;
+    },
+
+    raf: function (cb) {
+      if (typeof requestAnimationFrame === 'undefined') {
+        return;
+      }
+      function update() {
+        requestAnimationFrame(update);
+        cb.call();
+      }
+      requestAnimationFrame(update);
     }
   };
 
@@ -257,6 +268,7 @@
       domain: null, // default to current domain.
       path: '/',
       expiryDays: 365,
+      hideThreshold: 60,
       markup: [
         '<div class="cc_banner-wrapper {{containerClasses}}">',
         '<div class="cc_banner cc_container cc_container--is-open js_cc_container">',
@@ -278,6 +290,7 @@
       if (options) this.setOptions(options);
 
       this.setContainer();
+      this.bannerState = 'shown';
 
       // Calls render when theme is loaded.
       if (this.options.theme) {
@@ -347,6 +360,29 @@
       } else {
         this.container.insertBefore(this.element, this.container.firstChild);
       }
+
+      this.hideWhenScrollDown();
+    },
+
+    hideWhenScrollDown: function () {
+      var self = this;
+
+      if (typeof pageYOffset === 'undefined') {
+        return;
+      }
+
+      Util.raf(function() {
+        if (window.pageYOffset > self.options.hideThreshold ) {
+          if (self.bannerState === 'shown') {
+            self.hideBanner();
+          }
+        } else {
+          if (self.bannerState === 'hidden') {
+            self.showBanner();
+          }
+        }
+      });
+
     },
 
     dismiss: function (evt) {
@@ -360,15 +396,18 @@
 
     showBanner: function () {
       Util.addClass('cc_container--is-open', this.element.querySelector('.js_cc_container'));
+      this.bannerState = 'shown';
     },
 
     hideBanner: function () {
       Util.removeClass('cc_container--is-open', this.element.querySelector('.js_cc_container'));
+      this.bannerState = 'hidden';
     },
 
     removeBanner: function () {
       var self = this;
       this.hideBanner();
+      this.bannerState = 'dismissed';
       setTimeout(function() {
         self.container.removeChild(self.element);
       }, 1000);
