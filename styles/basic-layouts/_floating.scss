@@ -18,21 +18,18 @@
         left:15px;
         right:15px;
         text-align: center;
-
     }
 
     .cc_message {
 
     }
-
-
 }
 
 
 
 @media screen and (min-width: $screen-xs-min) {
-    .cc_container {
 
+    .cc_container {
         left:initial;
         right:20px;
         bottom:20px;
@@ -54,7 +51,6 @@
             bottom:8px;
             left:calc(50% - 50px); //--center align
         }
-
     }
 }
 
@@ -63,25 +59,20 @@
 @media screen and (min-width: $screen-sm-min) {
 
     .cc_container {
-
         padding-bottom:87px;
-
 
         .cc_message {
             font-size:1em;
         }
     }
-
 }
 
 @media screen and (min-width: $screen-md-min) {
 
     .cc_container {
 
-
         .cc_message {
 
         }
     }
-
 }

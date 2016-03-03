@@ -3,6 +3,7 @@ var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var rename = require("gulp-rename");
 var replace = require("gulp-replace");
+var autoprefixer = require('gulp-autoprefixer');
 var yargs = require("yargs");
 var del = require("del");
 var runSequence = require("run-sequence");
@@ -21,12 +22,16 @@ gulp.task('sass:tag', function(){
   return gulp.src("./sass-tmp/_variables.scss")
     .pipe(replace(/(\$logo:(?: )?url\()(.*)(\);)/, '$1' + baseCdnUrl + yargs.argv.tag+'/logo.png$3'))
     .pipe(gulp.dest('./sass-tmp'));
-    //.pipe(gulp.dest('./tmp'));
 });
 
 gulp.task('sass:build', function(){
   return gulp.src('./sass-tmp/*.scss')
-    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(sass({
+      outputStyle: 'compressed'
+    }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12']
+    }))
     .pipe(gulp.dest('./build'));
 });
 
