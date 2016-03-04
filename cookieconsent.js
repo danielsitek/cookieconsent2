@@ -140,7 +140,7 @@
       element.className = cn;
     },
 
-    raf: function (cb) {
+    tick: function (cb) {
       if (typeof requestAnimationFrame === 'undefined') {
         return;
       }
@@ -264,7 +264,7 @@
       link: null,
       target: '_self',
       container: null, // selector
-      theme: 'light-floating',
+      theme: 'dark-bottom',
       domain: null, // default to current domain.
       path: '/',
       expiryDays: 365,
@@ -272,9 +272,13 @@
       markup: [
         '<div class="cc_banner-wrapper {{containerClasses}}">',
         '<div class="cc_banner cc_container js_cc_container">',
+        '<div class="cc_container-content">',
+
         '<a href="#null" data-cc-event="click:dismiss" target="_blank" class="cc_btn cc_btn_accept_all">{{options.dismiss}}</a>',
 
         '<p class="cc_message">{{options.message}} <a data-cc-if="options.link" target="{{ options.target }}" class="cc_more_info" href="{{options.link || "#null"}}">{{options.learnMore}}</a></p>',
+
+        '</div>',
 
         '<a class="cc_logo" target="_blank" href="http://silktide.com/cookieconsent">Cookie Consent plugin for the EU cookie law</a>',
         '</div>',
@@ -375,7 +379,12 @@
         return;
       }
 
-      Util.raf(function() {
+      if (!this.options.hideThreshold) {
+        this.showBanner();
+        return;
+      }
+
+      Util.tick(function() {
         if (window.pageYOffset > self.options.hideThreshold ) {
           if (self.bannerState === 'shown') {
             self.hideBanner();
