@@ -19,7 +19,7 @@
   // The path to built in themes
   // Note: Directly linking to a version on the CDN like this is horrible, but it's less horrible than people downloading the code
   // then discovering that their CSS bucket disappeared
-  var THEME_BUCKET_PATH = '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/';
+  var THEME_BUCKET_PATH = '//localhost:3456/build/';
 
   // No point going further if they've already dismissed.
   if (document.cookie.indexOf(DISMISSED_COOKIE) > -1 || (window.navigator && window.navigator.CookiesOK)) {
@@ -120,6 +120,35 @@
       } else {
         el.attachEvent('on' + event, eventListener);
       }
+    },
+
+    addClass: function ( classname, element ) {
+      var cn = element.className;
+      if( cn.indexOf( classname ) != -1 ) {
+        return;
+      }
+      if( cn != '' ) {
+        classname = ' '+classname;
+      }
+      element.className = cn+classname;
+    },
+
+    removeClass: function ( classname, element ) {
+      var cn = element.className;
+      var rxp = new RegExp('\\s?\\b' + classname + '\\b', 'g');
+      cn = cn.replace( rxp, '' );
+      element.className = cn;
+    },
+
+    tick: function (cb) {
+      if (typeof requestAnimationFrame === 'undefined') {
+        return;
+      }
+      function update() {
+        requestAnimationFrame(update);
+        cb.call();
+      }
+      requestAnimationFrame(update);
     }
   };
 
@@ -233,23 +262,31 @@
       dismiss: 'Got it!',
       learnMore: 'More info',
       link: null,
-      target: '_self',
+      target: '_blank',
       container: null, // selector
-      theme: 'light-floating',
+      theme: 'dark-bottom',
       domain: null, // default to current domain.
-      path: '/', 
+      path: '/',
       expiryDays: 365,
+      hideThreshold: 60,
       markup: [
         '<div class="cc_banner-wrapper {{containerClasses}}">',
-        '<div class="cc_banner cc_container cc_container--open">',
+        '<div class="cc_banner cc_container js_cc_container">',
+        '<div class="cc_container-content">',
+
         '<a href="#null" data-cc-event="click:dismiss" target="_blank" class="cc_btn cc_btn_accept_all">{{options.dismiss}}</a>',
 
         '<p class="cc_message">{{options.message}} <a data-cc-if="options.link" target="{{ options.target }}" class="cc_more_info" href="{{options.link || "#null"}}">{{options.learnMore}}</a></p>',
 
+        '</div>',
+
         '<a class="cc_logo" target="_blank" href="http://silktide.com/cookieconsent">Cookie Consent plugin for the EU cookie law</a>',
         '</div>',
         '</div>'
-      ]
+      ],
+      onDismiss: function() {
+        return;
+      }
     },
 
     init: function () {
@@ -257,6 +294,7 @@
       if (options) this.setOptions(options);
 
       this.setContainer();
+      this.bannerState = 'hidden';
 
       // Calls render when theme is loaded.
       if (this.options.theme) {
@@ -326,13 +364,66 @@
       } else {
         this.container.insertBefore(this.element, this.container.firstChild);
       }
+
+      this.hideWhenScrollDown();
+    },
+
+    hideWhenScrollDown: function () {
+      var self = this;
+
+      if (typeof requestAnimationFrame === 'undefined') {
+        this.showBanner();
+      }
+
+      if (typeof pageYOffset === 'undefined') {
+        return;
+      }
+
+      if (!this.options.hideThreshold) {
+        this.showBanner();
+        return;
+      }
+
+      Util.tick(function() {
+        if (window.pageYOffset > self.options.hideThreshold ) {
+          if (self.bannerState === 'shown') {
+            self.hideBanner();
+          }
+        } else {
+          if (self.bannerState === 'hidden') {
+            self.showBanner();
+          }
+        }
+      });
+
     },
 
     dismiss: function (evt) {
+      var self = this;
       evt.preventDefault && evt.preventDefault();
       evt.returnValue = false;
+      this.options.onDismiss();
       this.setDismissedCookie();
-      this.container.removeChild(this.element);
+      this.removeBanner();
+    },
+
+    showBanner: function () {
+      Util.addClass('cc_container--is-open', this.element.querySelector('.js_cc_container'));
+      this.bannerState = 'shown';
+    },
+
+    hideBanner: function () {
+      Util.removeClass('cc_container--is-open', this.element.querySelector('.js_cc_container'));
+      this.bannerState = 'hidden';
+    },
+
+    removeBanner: function () {
+      var self = this;
+      this.hideBanner();
+      this.bannerState = 'dismissed';
+      setTimeout(function() {
+        self.container.removeChild(self.element);
+      }, 1000);
     },
 
     setDismissedCookie: function () {
