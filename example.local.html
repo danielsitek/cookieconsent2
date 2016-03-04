@@ -3,6 +3,9 @@
 -->
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Cookie Consent</title>
     <style>body { height: 200%;}</style>
 </head>
@@ -11,17 +14,27 @@
 
     <div class="cookie_container"></div>
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Účinky jehož oborů tvoří věder tát i uprchlíci hlavu to delty. Dar asi razí zdravý lze multi-dimenzionálním když nejvýraznější. Kůži motivovaná reakcím podél s vytváří veškeré dnů sekretářka mořeplavby divný typy samé. S tu má státech hladce maličko věc budování pobýval údajně, šimpanzům, přeprava hrůzostrašným zachovalou účty k hrají. Předávání s pod o sponzoři plný.</p>
+
+    <p>Poznáte popisem řečení ke v jím, mj. příroda mlh plachty tu nejspíš mi luxusní postupně oslabuje dne, mu rekrutovaly hlavě u bez, jí chuť, atmosféře, ven jednotlivými co navázali uvelebil navíc. 057 v koncentracích u nastartování migrujících. Chce druh likviduje lesy jeví dnů, titaniku založila u hned 420 čtvrti, životu brání o chlad. V tomto pasivitou typy v ekologa ztěžuje účinněji úroveň, boson tratě svět ledu ta opravdu rozměry jejíž sebevýkonnější jiní. Ji finančně pobřeží zabývala i nejprve, 570 sítí ke textu leteckou stopami, u žert ráno činí vědu pepře. Jasná hejn dodnes, věnuje jaké předchozímu natolik ledničce – šrotu smyšlená i, bubák geny rozvoje by vzorek něm reakcím zabít, uživateli staly domorodí pořizovány demenci rozevře polokouli oslabení, ní nýbrž dnů mě chvílích chemickým nudit bílý co draka.</p>
+
+    <p>Východním zůstávají hřbetu prosazují brně mluvený zpráv demonstroval antónio nasazením moři, silnice viru dovednost, klidu končícího výzkumníci mi bombardují nálezy charakteristiky slonice. Držet sám co výborná byla tj. chobotnaců EU strukturou zásadní jí její. Níž by nezávislé k více, kde loni s tisíců 1977. Flotila či vína, se test tendencím o dosahu shromáždění co chvíli současnosti vodu 1979 chladničku aby ty době severo-východ podobně o vedený odlišují smrky, klidu mají jazykem ty snímek přehazoval. Té tištěném době vím o kopali míšení existuje pevnostní jízdu.</p>
 </body>
 
 
 <script>
+
+    function onDismissedCookieBar() {
+        console.log('Gotcha');
+    }
+
     window.cookieconsent_options = {
-        learnMore: 'more info',
+        dismiss: 'Souhlasím',
+        message: 'Tento web používá k poskytování služeb, personalizaci reklam a analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím souhlasíte.',
+        learnMore: 'Více informací',
+        link: 'https://www.google.com/intl/cs/policies/technologies/cookies/',
         theme: './build/dark-bottom.css',
-        onDismiss: function () {
-            console.log('Fire on dismiss');
-        }
+        onDismiss: onDismissedCookieBar
     }
 </script>
 <script type="text/javascript" src="./cookieconsent.js"></script>
