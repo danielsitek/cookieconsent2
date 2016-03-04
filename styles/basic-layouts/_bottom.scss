@@ -13,9 +13,7 @@
         padding:8px 10px;
         background-color:#f1d600;
         cursor: pointer;
-        transition:font-size 200ms;
         text-align: center;
-        font-size:0.6em;
         display: block;
         width:33%;
         margin-left:10px;
@@ -24,9 +22,22 @@
     }
 
     .cc_message {
-        transition:font-size 200ms;
-        font-size:0.6em;
         display: block;
+    }
+}
+
+// small *hack*, because we want smaller font on small screens
+// but we also want to leave bigger font on ancient browsers
+@media screen and (min-width: 1px) {
+    .cc_container {
+
+        .cc_btn {
+            font-size:0.6em;
+        }
+
+        .cc_message {
+            font-size:0.6em;
+        }
     }
 }
 
@@ -38,8 +49,6 @@
         }
 
         .cc_message {
-
-            margin-top:0.5em;
             font-size:0.8em;
         }
     }
@@ -57,14 +66,19 @@
         }
 
         .cc_btn {
-            font-size:1em;
             padding:8px 15px;
         }
 
         .cc_message {
 
-            font-size:1em;
         }
+    }
+
+    .cc_container-content {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        justify-content: center;
     }
 }
 
@@ -73,7 +87,7 @@
     .cc_container {
 
         .cc_message {
-            font-size:1em;
+
         }
     }
 }

@@ -1,11 +1,16 @@
-$screen-xs-min: 500px;
-$screen-sm-min: 768px;
-$screen-md-min: 992px;
-$screen-lg-min: 1200px;
 
-$screen-sm-max: 767px;
-$screen-md-max: 991px;
-$screen-lg-max: 1199px;
+@function to-em($val) {
+    @return (($val/16)*1em)
+}
+
+
+$screen-xs-min: to-em(500);
+$screen-sm-min: to-em(768);
+$screen-md-min: to-em(992);
+$screen-lg-min: to-em(1201);
+
+$screen-sm-max: to-em(767);
+$screen-md-max: to-em(991);
+$screen-lg-max: to-em(1200);
 
 $plugin-height: 66px !default;
-$logo: url(https://s3-eu-west-1.amazonaws.com/assets.cookieconsent.silktide.com/cookie-consent-logo.png);
