@@ -19,7 +19,7 @@
   // The path to built in themes
   // Note: Directly linking to a version on the CDN like this is horrible, but it's less horrible than people downloading the code
   // then discovering that their CSS bucket disappeared
-  var THEME_BUCKET_PATH = '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/';
+  var THEME_BUCKET_PATH = '//localhost:3456/build/';
 
   // No point going further if they've already dismissed.
   if (document.cookie.indexOf(DISMISSED_COOKIE) > -1 || (window.navigator && window.navigator.CookiesOK)) {
