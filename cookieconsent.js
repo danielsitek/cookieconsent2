@@ -262,7 +262,7 @@
       dismiss: 'Got it!',
       learnMore: 'More info',
       link: null,
-      target: '_self',
+      target: '_blank',
       container: null, // selector
       theme: 'dark-bottom',
       domain: null, // default to current domain.
@@ -284,8 +284,8 @@
         '</div>',
         '</div>'
       ],
-      onDismiss: function(cb) {
-        return cb.call();
+      onDismiss: function() {
+        return;
       }
     },
 
