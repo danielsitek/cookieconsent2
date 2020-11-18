@@ -26,6 +26,6 @@
   "author": "Silktide Ltd.",
   "license": "MIT",
   "dependencies": {
-    "yargs": "^4.2.0"
+    "yargs": "^16.0.0"
   }
 }
